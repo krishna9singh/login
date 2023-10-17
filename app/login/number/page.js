@@ -92,14 +92,22 @@ function page() {
       .then(function (res) {
         if (res.data.success === true) {
           if (res.data.userexists) {
-            sessionStorage.setItem("fullname", res.data.user.fullname);
-            sessionStorage.setItem("pic", res.data.a);
+            if (window.ReactNativeWebView) {
+              let a = JSON.stringify(res?.data);
+              window.ReactNativeWebView.postMessage(a);
+            }
             toast.success("Success");
-            sessionStorage.setItem("id", res.data.user._id);
-            router.push("/main/post/Newforyou");
           } else {
+            if (window.ReactNativeWebView) {
+              let data = {
+                number: number,
+                userexists: false,
+                success: true,
+              };
+              let a = JSON.stringify(data);
+              window.ReactNativeWebView.postMessage(a);
+            }
             toast.error("Seems like you don't have an account in the app.");
-            router.push(`/login/singUp?no=${number}`);
           }
         } else {
           toast.error("Something went wrong...");
@@ -302,7 +310,7 @@ function page() {
                         value={value}
                         onChange={(event) => handleInputChange(event, index)}
                         ref={otpInputRefs[index]}
-                        maxLength="1"
+                        maxLength={1}
                         type="number"
                       />
                     </>
@@ -364,7 +372,7 @@ function page() {
               <div
                 className={`${
                   change === 1
-                    ? "flex justify-start flex-col  items-start  py-4"
+                    ? "flex justify-start flex-col  items-start  py-10"
                     : "hidden"
                 }`}
               >
@@ -384,7 +392,7 @@ function page() {
                   />
                 </div>
               </div>
-              <div className={`${change === 1 ? "py-5 " : "hidden"}`}>
+              <div className={`${change === 1 ? "py-1" : "hidden"}`}>
                 <div
                   onClick={onSignup}
                   className="h-[50px] w-[300px] select-none cursor-pointer bg-black  flex items-center justify-center rounded-2xl text-white "
@@ -392,9 +400,10 @@ function page() {
                   {loading && (
                     <CgSpinner size={20} className="m-1 animate-spin" />
                   )}
-                  <span className={`${loading ? "hidden" : ""}`}>Send Otp</span>
+                  <span className={`${loading ? "hidden" : ""}`}>Continue</span>
                 </div>
               </div>
+
               <div className="flex fixed bottom-10 text-[#414141] gap-4 text-[12px] select-none">
                 <Link href={"../terms"}>T&C</Link>
                 <Link href={"../privacy"}>Privacy</Link>
@@ -404,6 +413,7 @@ function page() {
               </div>
             </div>
           )}
+          <div style={{ marginBottom: "50%" }} />
         </div>
       )}
     </>
