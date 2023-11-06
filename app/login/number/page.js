@@ -9,6 +9,7 @@ import axios from "axios";
 import { API } from "@/Essentials";
 import { CgSpinner } from "react-icons/cg";
 import Link from "next/link";
+import Lotties from "@/app/Lotties";
 
 function page() {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -26,6 +27,7 @@ function page() {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [load, setLoad] = useState(false);
+  const [anim,setAnim]=useState(false)
 
   const handleInputChange = (event, index) => {
     const { value } = event.target;
@@ -164,17 +166,23 @@ function page() {
     window.confirmationResult
       .confirm(OTP)
       .then(async (res) => {
+        setAnim(true)
         setLoading(false);
         fetchid();
       })
       .catch((err) => {
         console.log(err);
+        setAnim(false)
         setLoading(false);
       });
   }
 
   return (
-    <>
+    <>{anim
+      ?
+      <Lotties/>
+      :
+      <>
       {load ? (
         <>
           <div
@@ -333,6 +341,7 @@ function page() {
           <div style={{ marginBottom: "50%" }} />
         </div>
       )}
+</>}
     </>
   );
 }
