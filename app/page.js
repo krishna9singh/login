@@ -32,31 +32,10 @@ export default function loginLayout({ children }) {
               transform: `translateX(-${activeSlide * 100}%)`,
             }}
           >
-            {slides.map((slide, index) => (
-              <div
-                key={index}
-                className="h-50vh w-full flex-shrink-0 bg-lightgray flex items-center justify-center text-black text-2xl"
-              >
-                <Image priority src={slide.img} alt="hello" />
-              </div>
-            ))}
+         
           </div>
           <div className="flex justify-center pt-24">
-            {slides.map((_, index) => (
-              <div
-                key={index}
-                className={` mx-2 ring-2 ring-white p-1 rounded-full shadow-lg duration-100 ${
-                  index === activeSlide ? "bg-[#ffffff00] " : "bg-white"
-                }`}
-              >
-                <div
-                  key={index}
-                  className={`h-1 rounded-full duration-100 ${
-                    index === activeSlide ? "bg-[#ffffff] w-4" : "bg-white w-1"
-                  }`}
-                ></div>
-              </div>
-            ))}
+           
           </div>
         </div>
       </div>
